@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import org.w3c.dom.Text;
 
@@ -51,7 +52,9 @@ public class MainActivity extends AppCompatActivity{
     private SwipeRefreshLayout swipeRefreshLayout;
     //http
     private String url = "https://rytek.me/shoppingList";
-    private OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(new APIInterceptor())
+            .build();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     Gson g = new Gson();
@@ -311,10 +314,14 @@ public class MainActivity extends AppCompatActivity{
             public void onResponse(Call call, Response response) throws IOException {
                 String json = response.body().string();
                 Log.d(TAG, json);
-
-                Item[] items = g.fromJson(json, Item[].class);
-                itemList.addAll(Arrays.asList(items));
-                handler.post(() -> mAdapter.notifyDataSetChanged());
+                try {
+                    Item[] items = g.fromJson(json, Item[].class);
+                    itemList.addAll(Arrays.asList(items));
+                    handler.post(() -> mAdapter.notifyDataSetChanged());
+                }
+                catch (JsonSyntaxException ex) {
+                    Snackbar.make(findViewById(R.id.shopping_list), "Failed to get items", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
     }
