@@ -1,5 +1,7 @@
 package me.rytek.liveshoppinglist;
 
+
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +35,8 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -94,9 +98,11 @@ public class MainActivity extends AppCompatActivity{
             refreshItems();
         });
 
+
         //set user
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        user = sharedPrefs.getString("prefUsername", "Ryan");
+        user = sharedPrefs.getString("prefUsername", user);
+        url = sharedPrefs.getString("prefURL", url);
 
         //get items
         getItems();

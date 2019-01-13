@@ -3,5 +3,16 @@
     <EditTextPreference
         android:title="Your Name"
         android:summary="Set your name for the item"
+        android:defaultValue="Ryan"
         android:key="prefUsername"/>
+
+    <PreferenceCategory android:title="Connection Settings">
+        <EditTextPreference
+            android:title="Connection URL"
+            android:summary="Set the connection URL for the server"
+            android:defaultValue="https://rytek.me/shoppingList"
+            android:key="prefURL"/>
+    </PreferenceCategory>
+
+
 </PreferenceScreen>
