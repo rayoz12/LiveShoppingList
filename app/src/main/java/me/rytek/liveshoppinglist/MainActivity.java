@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity{
     private ArrayList<Item> itemList = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
     //http
-    private String url = "https://rytek.me/shoppingList";
+    private String url = "https://rytek.me/";
     private OkHttpClient client = new OkHttpClient.Builder()
             .addInterceptor(new APIInterceptor())
             .build();
@@ -103,6 +103,13 @@ public class MainActivity extends AppCompatActivity{
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         user = sharedPrefs.getString("prefUsername", user);
         url = sharedPrefs.getString("prefURL", url);
+        if (!url.endsWith("/")) {
+            url += "/";
+        }
+        if (!url.contains("shoppingList")) {
+            url += "shoppingList/";
+        }
+
 
         //get items
         getItems();
@@ -114,6 +121,7 @@ public class MainActivity extends AppCompatActivity{
                 .url(url + "/")
                 .build();
 
+        Log.d(TAG, "Sending Request to " + url + "/");
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -128,12 +136,20 @@ public class MainActivity extends AppCompatActivity{
                 String json = response.body().string();
                 Log.d(TAG, json);
                 itemList.clear();
-                Item[] items = g.fromJson(json, Item[].class);
-                itemList.addAll(Arrays.asList(items));
-                handler.post(() -> {
-                    mAdapter.notifyDataSetChanged();
-                    swipeRefreshLayout.setRefreshing(false);
-                });
+                try {
+                    Item[] items = g.fromJson(json, Item[].class);
+                    itemList.addAll(Arrays.asList(items));
+                    handler.post(() -> {
+                        mAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    });
+                }
+                catch (JsonSyntaxException e) {
+                    Snackbar.make(findViewById(R.id.shopping_list), "Failed to deserialise JSON", Snackbar.LENGTH_SHORT).show();
+                    Log.e(TAG, e.getMessage());
+                    handler.post(() -> swipeRefreshLayout.setRefreshing(false));
+                }
+
 
             }
         });

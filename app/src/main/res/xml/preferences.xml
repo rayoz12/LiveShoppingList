@@ -10,7 +10,7 @@
         <EditTextPreference
             android:title="Connection URL"
             android:summary="Set the connection URL for the server"
-            android:defaultValue="https://rytek.me/shoppingList"
+            android:defaultValue="https://rytek.me/"
             android:key="prefURL"/>
     </PreferenceCategory>
 
