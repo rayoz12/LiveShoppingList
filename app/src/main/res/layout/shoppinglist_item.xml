@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="list"
+            type="me.rytek.shoppinglist.model.ShoppingList" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/layoutRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:minHeight="64dp">
+
+        <ImageView
+            android:id="@+id/mtrl_list_item_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/mtrl_list_item_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/mtrl_list_item_icon"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:text="@{list.name}"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            tools:text="Tech List"/>
+
+        <TextView
+            android:id="@+id/mtrl_list_item_secondary_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mtrl_list_item_text"
+            android:layout_gravity="center_vertical"
+            android:layout_toEndOf="@id/mtrl_list_item_icon"
+            android:text="@{list.items.size() + ` Items`}"
+            android:paddingEnd="16dp"
+            android:maxLines="2"
+            tools:text="10 Items"/>
+
+    </RelativeLayout>
+
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/layoutRoot"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0sp">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/item_button"-->
+<!--            style="@style/Widget.MaterialComponents.Button.TextButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="128sp"-->
+<!--            android:text="@{list.name}"-->
+<!--            android:textAlignment="viewStart"-->
+<!--            android:textSize="24sp"-->
+<!--            android:textStyle="bold"-->
+<!--            tools:textColor="@color/colorAccentText"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:text="Tech List" />-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+</layout>

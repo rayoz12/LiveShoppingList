@@ -1,0 +1,104 @@
+<!-- Despite the confusing name this is the view for the shopping list Item NOT the shopping list view -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
+        <variable name="item" type="me.rytek.shoppinglist.model.Item"/>
+        <variable name="isBusy" type="Boolean"/>
+    </data>
+
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+<!--        -->
+<!--    </FrameLayout>-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutRoot"
+        android:layout_width="match_parent"
+        android:background="?selectableItemBackground"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{isBusy ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/itemInfo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/itemInfo" />
+
+        <RelativeLayout
+            android:id="@+id/itemInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/mtrl_list_item_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp" />
+
+            <TextView
+                android:id="@+id/mtrl_list_item_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/mtrl_list_item_icon"
+                android:maxLines="1"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:text="@{item.name}"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                tools:text="Toothbrush" />
+
+            <TextView
+                android:id="@+id/mtrl_list_item_secondary_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mtrl_list_item_text"
+                android:layout_gravity="center_vertical"
+                android:layout_toEndOf="@id/mtrl_list_item_icon"
+                android:maxLines="2"
+                android:paddingEnd="16dp"
+                android:text="@{item.comments}"
+                tools:text="Colgate Active White" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/addedBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:text="@{item.addedBy.firstName}"
+                tools:text="@tools:sample/first_names" />
+
+            <TextView
+                android:id="@+id/dateModified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addedBy"
+                android:layout_gravity="center_vertical"
+                android:maxLines="2"
+                android:paddingEnd="16dp"
+                android:text="@{item.markedOff ? item.timeMarkedOff.toLocaleString() : item.timeAdded.toLocaleString()}"
+                tools:text="@tools:sample/date/ddmmyy" />
+
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
