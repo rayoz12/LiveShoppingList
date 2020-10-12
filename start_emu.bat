@@ -1,0 +1,1 @@
+call C:\Users\Ryan\AppData\Local\Android\Sdk\emulator\emulator.exe -avd Samsung_S10_API_29
